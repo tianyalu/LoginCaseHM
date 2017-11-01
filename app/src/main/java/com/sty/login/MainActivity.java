@@ -15,6 +15,8 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.sty.login.net.LoginAsyncHttpClientUtils;
+import com.sty.login.net.LoginHttpClientUtils;
 import com.sty.login.net.LoginHttpUtils;
 import com.sty.login.util.UserInfoUtil;
 
@@ -108,10 +110,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             return;
         }
 
-        //e.请求服务器
-        //带着用户名密码请求服务器验证密码是否正确
-        LoginHttpUtils.requestNetForGetLogin(handler, username, password);
+        //e.请求服务器 带着用户名密码请求服务器验证密码是否正确
+        //HttpURLConnection方式
+        //LoginHttpUtils.requestNetForGetLogin(handler, username, password);
         //LoginHttpUtils.requestNetForPostLogin(handler, username, password);
+
+        //HttpClient方式
+        //LoginHttpClientUtils.requestNetForGetLogin(handler, username, password);
+        //LoginHttpClientUtils.requestNetForPostLogin(handler, username, password);
+
+        //AsyncHttpClient方式
+        LoginAsyncHttpClientUtils.requestNetForGetLogin(mContext, handler, username, password);
+        //LoginAsyncHttpClientUtils.requestNetForPostLogin(mContext, handler, username, password);
 
     }
 

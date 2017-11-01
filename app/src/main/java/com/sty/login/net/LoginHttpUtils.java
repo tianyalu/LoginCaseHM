@@ -9,6 +9,7 @@ import com.sty.login.util.StreamUtils;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 
 /**
  * Created by Shi Tianyi on 2017/10/29/0029.
@@ -16,6 +17,12 @@ import java.net.URL;
 
 public class LoginHttpUtils {
 
+    /**
+     * 使用URLConnection请求服务器 get方式
+     * @param handler
+     * @param username
+     * @param password
+     */
     public static void requestNetForGetLogin(final Handler handler, final String username, final String password){
         new Thread(new Runnable() {
             @Override
@@ -24,7 +31,7 @@ public class LoginHttpUtils {
                 try{
                     //1.创建一个URL对象
                     String urlGetStr = "http://192.168.1.8/newsServiceHM/servlet/LoginServlet" + "?username="
-                            + username + "&pwd=" + password;
+                            + URLEncoder.encode(username) + "&pwd=" + URLEncoder.encode(password);  //解决服务器接收客户端的中文乱码问题
                     URL url = new URL(urlGetStr);
                     //2.通过Url对象获取一个HttpURLConnection对象
                     HttpURLConnection openConnection = (HttpURLConnection) url.openConnection();
@@ -54,6 +61,12 @@ public class LoginHttpUtils {
         }).start();
     }
 
+    /**
+     * 使用URLConnection请求服务器 post方式
+     * @param handler
+     * @param username
+     * @param password
+     */
     public static void requestNetForPostLogin(final Handler handler, final String username, final String password){
         new Thread(new Runnable() {
             @Override
@@ -68,7 +81,7 @@ public class LoginHttpUtils {
                     openConnection.setRequestMethod("POST");
                     openConnection.setConnectTimeout(10 * 1000);
                     //4.设置一些请求头的信息 field:http请求的请求头 newValue:请求头的值
-                    String body = "username=" + username + "&pwd=" + password;
+                    String body = "username=" + URLEncoder.encode(username) + "&pwd=" + URLEncoder.encode(password); //解决服务器接收客户端的中文乱码问题
                     //openConnection.setRequestProperty("Content-length", body.length() + ""); //这个头信息可以被注释掉而没有影响
                     //openConnection.setRequestProperty("Cache-control", "max-age=0"); //这个头信息可以被注释掉而没有影响
                     //openConnection.setRequestProperty("Origin", "http://192.168.1.8"); //这个头信息可以被注释掉而没有影响

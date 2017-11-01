@@ -23,7 +23,7 @@ public class StreamUtils {
             }
             //result = out.toString();
 
-            result = new String(out.toByteArray(), "gbk");  //编码转换
+            result = new String(out.toByteArray(), "utf-8");  //编码转换 解决客户端接收服务器的中文乱码问题
             out.close();
         }catch (Exception e){
             e.printStackTrace();
